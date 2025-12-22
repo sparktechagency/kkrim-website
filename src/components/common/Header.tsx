@@ -14,19 +14,23 @@ import { useState } from 'react';
 export default function Header() {
   const [language, setLanguage] = useState('EN');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<string>(''); // Track selected service
+  const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false); // Control dropdown open state
   const router = useRouter();
 
-  // Function to handle dropdown item clicks without page reload
-  const handleDropdownClick = (path: string) => {
-    router.push(path);
+  // Function to handle dropdown item clicks
+  const handleServiceClick = (path: string, serviceName: string) => {
+    setSelectedService(serviceName); // Set the selected service
+    setIsServicesDropdownOpen(false); // Close the dropdown
     setIsMobileMenuOpen(false); // Close mobile menu on navigation
+    router.push(path);
   };
 
   const handleLanguageChange = (newLanguage: string) => {
     setLanguage(newLanguage);
   };
 
-  console.log(handleLanguageChange)
+  console.log(handleLanguageChange);
 
   const services = [
     { name: 'Infrastructure Penetration Testing', path: '/services/infrastructure-testing' },
@@ -83,13 +87,15 @@ export default function Header() {
 
           {/* Desktop Navigation Links */}
           <div className="hidden lg:flex items-center gap-6 xl:gap-8">
-            <DropdownMenu>
+            <DropdownMenu open={isServicesDropdownOpen} onOpenChange={setIsServicesDropdownOpen}>
               <DropdownMenuTrigger className="flex items-center gap-1 focus:outline-none border-none cursor-pointer select-none text-white hover:text-gray-300 transition-colors text-sm xl:text-base">
                 Services
                 <ChevronDown className="w-4 h-4" />
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 className="bg-[#1a1f2e] border border-gray-700 rounded-lg p-4 min-w-[280px] xl:min-w-[320px] shadow-xl animate-in slide-in-from-top-2 fade-in-0"
+                onCloseAutoFocus={(e) => e.preventDefault()} // Prevent auto focus issues
+                sideOffset={5} // Add some offset from trigger
               >
                 {/* Header */}
                 <div className="pb-3 mb-3 border-b border-gray-700">
@@ -100,14 +106,23 @@ export default function Header() {
                 {services.map((service, index) => (
                   <DropdownMenuItem
                     key={index}
-                    asChild
-                    className="flex items-center justify-between py-2 px-3 cursor-pointer text-white hover:bg-gray-800 rounded-md transition-colors group text-sm xl:text-base"
-                    onClick={() => handleDropdownClick(service.path)}
+                    className={`
+                      flex items-center justify-between py-2 px-3 cursor-pointer 
+                      rounded-md transition-colors group text-sm xl:text-base
+                      ${selectedService === service.name
+                        ? 'bg-gray-800 text-red-500'
+                        : 'text-white hover:bg-gray-800'
+                      }
+                    `}
+                    onClick={() => {
+                      handleServiceClick(service.path, service.name);
+                    }}
+                    onSelect={(e) => {
+                      e.preventDefault(); // Prevent default selection behavior
+                    }}
                   >
-                    <div className="flex items-center gap-2">
-                      <span>{service.name}</span>
-                      <ChevronRight className="w-4 h-4 opacity-60 group-hover:opacity-100 transition-opacity" />
-                    </div>
+                    <span>{service.name}</span>
+                    <ChevronRight className="w-4 h-4 opacity-60 group-hover:opacity-100 transition-opacity" />
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -140,16 +155,25 @@ export default function Header() {
                 <span className="text-gray-400 hidden sm:inline">/</span>
                 <span className="text-red-500 font-medium">{language}</span>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="bg-[#1a1f2e] border-gray-700">
+              <DropdownMenuContent
+                className="bg-[#1a1f2e] border-gray-700"
+                onCloseAutoFocus={(e) => e.preventDefault()}
+              >
                 <DropdownMenuItem
-                  onClick={() => setLanguage('EN')}
-                  className="text-white hover:bg-gray-800"
+                  onClick={() => {
+                    setLanguage('EN');
+                  }}
+                  className={`text-white hover:bg-gray-800 ${language === 'EN' ? 'bg-gray-800' : ''}`}
+                  onSelect={(e) => e.preventDefault()}
                 >
                   English
                 </DropdownMenuItem>
                 <DropdownMenuItem
-                  onClick={() => setLanguage('DE')}
-                  className="text-white hover:bg-gray-800"
+                  onClick={() => {
+                    setLanguage('DE');
+                  }}
+                  className={`text-white hover:bg-gray-800 ${language === 'DE' ? 'bg-gray-800' : ''}`}
+                  onSelect={(e) => e.preventDefault()}
                 >
                   Deutsch
                 </DropdownMenuItem>
@@ -157,7 +181,10 @@ export default function Header() {
             </DropdownMenu>
 
             {/* Request Pentest Button */}
-            <Button onClick={() => router.push("/request-pentest")} className="bg-red-600 hover:bg-red-700 text-white px-3 sm:px-6 py-1.5 sm:py-2.5 rounded-lg font-medium transition-colors text-sm sm:text-base whitespace-nowrap">
+            <Button
+              onClick={() => router.push("/request-pentest")}
+              className="bg-red-600 hover:bg-red-700 text-white px-3 sm:px-6 py-1.5 sm:py-2.5 rounded-lg font-medium transition-colors text-sm sm:text-base whitespace-nowrap"
+            >
               Request Pentest
             </Button>
           </div>
@@ -187,10 +214,17 @@ export default function Header() {
                 {services.map((service, index) => (
                   <button
                     key={index}
-                    onClick={() => handleDropdownClick(service.path)}
-                    className="flex items-center justify-between w-full py-3 px-4 text-white hover:bg-gray-800 rounded-lg transition-colors text-left"
+                    onClick={() => handleServiceClick(service.path, service.name)}
+                    className={`
+                      flex items-center justify-between w-full py-3 px-4 
+                      rounded-lg transition-colors text-left text-base
+                      ${selectedService === service.name
+                        ? 'bg-gray-800 text-red-500'
+                        : 'text-white hover:bg-gray-800'
+                      }
+                    `}
                   >
-                    <span className="text-base">{service.name}</span>
+                    <span>{service.name}</span>
                     <ChevronRight className="w-5 h-5 opacity-60" />
                   </button>
                 ))}
@@ -202,7 +236,10 @@ export default function Header() {
               {navLinks.map((link, index) => (
                 <button
                   key={index}
-                  onClick={() => handleDropdownClick(link.path)}
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    router.push(link.path);
+                  }}
                   className="flex items-center justify-between w-full py-3 px-4 text-white hover:bg-gray-800 rounded-lg transition-colors text-left"
                 >
                   <span className="text-base">{link.name}</span>
