@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { CheckCircle, Lock, Phone } from 'lucide-react';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -106,7 +107,7 @@ export default function Hero() {
             {/* Main Logo Container */}
             <div className="relative z-10 space-y-6 sm:space-y-8 max-w-sm mx-auto lg:mx-0">
               {/* Lock Icon */}
-              <div className="flex justify-end animate-float mb-8 sm:mb-12">
+              <div className="flex justify-end animate-float">
                 <div className="bg-gray-900 rounded-xl sm:rounded-2xl p-3 sm:p-4 shadow-xl sm:shadow-2xl hover:shadow-red-500/20 transition-all duration-300 hover:scale-110">
                   <Lock className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-white" />
                 </div>
@@ -116,17 +117,12 @@ export default function Hero() {
               <div className="bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-10 lg:p-12 shadow-xl sm:shadow-2xl hover:shadow-red-500/20 transition-all duration-500 hover:scale-105 group">
                 <div className="flex items-center gap-3 sm:gap-4">
                   <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-red-500 to-gray-900 rounded-xl sm:rounded-2xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-500" />
-                    <div className="relative bg-gray-900 rounded-xl sm:rounded-2xl p-4 sm:p-5 lg:p-6">
-                      <Lock className="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 text-white" strokeWidth={2.5} />
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-white font-black text-2xl sm:text-3xl lg:text-4xl">S</span>
-                      </div>
+                    <div className="absolute inset-0  rounded-xl sm:rounded-2xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-500" />
+
+                    <div className=''>
+                      <Image src={"/icons/logo2.png"} height={1000} width={1000} alt='' className='w-full h-32' />
                     </div>
-                  </div>
-                  <div>
-                    <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 tracking-tight">sudo</div>
-                    <div className="text-2xl sm:text-3xl lg:text-4xl font-black text-gray-900 tracking-tight">Secure</div>
+
                   </div>
                 </div>
               </div>

@@ -289,7 +289,7 @@ export default function CaseStudiesPage() {
             {filteredCaseStudies.map((study) => (
               <Card
                 key={study.id}
-                className="bg-gray-900 p-0 border-gray-800 overflow-hidden hover:border-gray-700 transition-colors group cursor-pointer"
+                className="bg-gray-900 p-0 border-gray-800 overflow-hidden text-white hover:border-gray-700 transition-colors group cursor-pointer"
                 onClick={() => handleReadMore('case', study.id)}
               >
                 <div className="relative">
@@ -304,7 +304,7 @@ export default function CaseStudiesPage() {
                   </div>
                   <Badge
                     variant="outline"
-                    className={`absolute top-3 left-3 ${study.categoryColor} border-current text-xs font-medium`}
+                    className={`absolute top-3 left-3  text-white ${study.categoryColor} border-current text-xs font-medium`}
                   >
                     {study.category}
                   </Badge>
@@ -312,17 +312,17 @@ export default function CaseStudiesPage() {
 
                 <CardContent className="p-4 sm:p-6">
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs text-gray-500">{study.tag}</span>
-                    <span className="text-xs text-gray-500 flex items-center gap-1">
+                    <span className="text-xs text-white">{study.tag}</span>
+                    <span className="text-xs text-white flex items-center gap-1">
                       <Calendar className="w-3 h-3" />
                       {study.date}
                     </span>
                   </div>
 
-                  <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 line-clamp-2 leading-tight">
+                  <h3 className="text-lg sm:text-xl text-white font-bold mb-2 sm:mb-3 line-clamp-2 leading-tight">
                     {study.title}
                   </h3>
-                  <p className="text-gray-400 text-xs sm:text-sm mb-4 leading-relaxed line-clamp-3">
+                  <p className=" text-white text-xs sm:text-sm mb-4 leading-relaxed line-clamp-3">
                     {study.description}
                   </p>
 
@@ -377,7 +377,7 @@ export default function CaseStudiesPage() {
                   key={category}
                   variant={selectedBlogCategory === category ? "default" : "outline"}
                   size="sm"
-                  className={`whitespace-nowrap text-xs sm:text-sm ${selectedBlogCategory === category
+                  className={`whitespace-nowrap text-xs text-white sm:text-sm ${selectedBlogCategory === category
                     ? 'bg-red-600 hover:bg-red-700'
                     : 'bg-transparent border-gray-700 hover:bg-gray-800'
                     }`}
@@ -398,7 +398,7 @@ export default function CaseStudiesPage() {
             {filteredBlogs.map((blog) => (
               <Card
                 key={blog.id}
-                className="bg-gray-900 p-0 border-gray-800 overflow-hidden hover:border-gray-700 transition-colors group cursor-pointer"
+                className="bg-gray-900 p-0 border-gray-800 text-white overflow-hidden hover:border-gray-700 transition-colors group cursor-pointer"
                 onClick={() => handleReadMore('blog', blog.id)}
               >
                 <div className="relative">
@@ -413,27 +413,27 @@ export default function CaseStudiesPage() {
                   </div>
                   <Badge
                     variant="outline"
-                    className={`absolute top-3 left-3 ${blog.categoryColor} border-current text-xs font-medium`}
+                    className={`absolute top-3 left-3 ${blog.categoryColor} text-white border-current text-xs font-medium`}
                   >
                     {blog.category}
                   </Badge>
                 </div>
 
                 <CardContent className="p-4 sm:p-6">
-                  <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 line-clamp-2 leading-tight">
+                  <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3 line-clamp-2 leading-tight">
                     {blog.title}
                   </h3>
-                  <p className="text-gray-400 text-xs sm:text-sm mb-4 leading-relaxed line-clamp-3">
+                  <p className=" text-xs sm:text-sm mb-4 text-white leading-relaxed line-clamp-3">
                     {blog.description}
                   </p>
 
                   {/* Meta Information */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 mb-4 pt-3 border-t border-gray-800">
-                    <div className="flex items-center gap-2 text-xs text-gray-500">
+                  <div className="flex flex-col sm:flex-row sm:items-center text-white justify-between gap-2 sm:gap-4 mb-4 pt-3 border-t border-gray-800">
+                    <div className="flex items-center gap-2 text-xs text-white">
                       <User className="w-3.5 h-3.5" />
                       <span className="truncate">{blog.author}</span>
                     </div>
-                    <div className="flex items-center gap-3 text-xs text-gray-500">
+                    <div className="flex items-center gap-3 text-xs text-white">
                       <span className="flex items-center gap-1">
                         <Calendar className="w-3.5 h-3.5" />
                         {blog.date}

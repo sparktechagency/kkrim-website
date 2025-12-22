@@ -80,7 +80,7 @@ export default function HowItWorksSection() {
                   </div>
 
                   {/* Horizontal connector for desktop */}
-                  <div className="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-gray-800 -ml-4"
+                  <div className="hidden lg:block absolute top-8 left-full w-full h-0.5 -ml-4"
                     style={{ width: 'calc(100% - 2rem)' }}>
                   </div>
                 </>
