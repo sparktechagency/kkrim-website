@@ -196,8 +196,8 @@ export default function CareersPage() {
               Send General Application
             </Button>
             <Button
-              variant="outline"
-              className="border-white text-white hover:bg-white/10 px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-base lg:text-lg font-semibold rounded-lg w-full sm:w-auto"
+              variant="default"
+              className="border-white border text-white bg-black hover:bg-white/10 px-6 sm:px-8 py-4 sm:py-6 text-sm sm:text-base lg:text-lg font-semibold rounded-lg w-full sm:w-auto"
             >
               Schedule Informational Call
             </Button>
