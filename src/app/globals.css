@@ -50,15 +50,15 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
   --primary: #FFC107;
-  --secondary : #00715D;
-  --darkColor : #101A24 ;
-  --textColor : #6B7280 ;
-  --WhiteColor : #FFFFFF ;
-  --ErrorColor : #ED3F27;
-  --WarningColor : #FF8306;
-  --BGColor : #F9F9F9;
-  --DisableColor : #C8C8C8;
-  --StrokeColor : #F2F2F2;
+  --secondary: #00715D;
+  --darkColor: #101A24;
+  --textColor: #6B7280;
+  --WhiteColor: #FFFFFF;
+  --ErrorColor: #ED3F27;
+  --WarningColor: #FF8306;
+  --BGColor: #F9F9F9;
+  --DisableColor: #C8C8C8;
+  --StrokeColor: #F2F2F2;
   /* Changed to your yellow color */
   --primary-foreground: oklch(0.985 0 0);
   --secondary: oklch(0.97 0 0);
@@ -119,6 +119,11 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+}
+
+
+html {
+  scroll-behavior: smooth;
 }
 
 @layer base {

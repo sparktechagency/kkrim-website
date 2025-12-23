@@ -8,21 +8,21 @@ import {
 import { ChevronDown, ChevronRight, Globe, Menu, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function Header() {
   const [language, setLanguage] = useState('EN');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState<string>(''); // Track selected service
-  const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false); // Control dropdown open state
+  const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
+  const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
-  // Function to handle dropdown item clicks
-  const handleServiceClick = (path: string, serviceName: string) => {
-    setSelectedService(serviceName); // Set the selected service
-    setIsServicesDropdownOpen(false); // Close the dropdown
-    setIsMobileMenuOpen(false); // Close mobile menu on navigation
+  const handleServiceClick = (path: string) => {
+    setIsServicesDropdownOpen(false);
+    setIsMobileMenuOpen(false);
+    setIsMobileServicesOpen(false);
     router.push(path);
   };
 
@@ -42,13 +42,14 @@ export default function Header() {
     { name: 'SME / Small Business Security Packages', path: '/services/sme-packages' },
   ];
 
-  // Navigation links for mobile menu
   const navLinks = [
     { name: 'About', path: '/about' },
     { name: 'Case Studies & Blogs', path: '/case-studies' },
     { name: 'Careers', path: '/careers' },
     { name: 'Contact', path: '/contact' },
   ];
+
+  const isServiceActive = (path: string) => pathname === path;
 
   return (
     <nav className="bg-[#131927] select-none sticky top-0 z-50">
@@ -94,8 +95,8 @@ export default function Header() {
               </DropdownMenuTrigger>
               <DropdownMenuContent
                 className="bg-[#1a1f2e] border border-gray-700 rounded-lg p-4 min-w-[280px] xl:min-w-[320px] shadow-xl animate-in slide-in-from-top-2 fade-in-0"
-                onCloseAutoFocus={(e) => e.preventDefault()} // Prevent auto focus issues
-                sideOffset={5} // Add some offset from trigger
+                onCloseAutoFocus={(e) => e.preventDefault()}
+                sideOffset={5}
               >
                 {/* Header */}
                 <div className="pb-3 mb-3 border-b border-gray-700">
@@ -109,16 +110,16 @@ export default function Header() {
                     className={`
                       flex items-center justify-between py-2 px-3 cursor-pointer 
                       rounded-md transition-colors group text-sm xl:text-base
-                      ${selectedService === service.name
+                      ${isServiceActive(service.path)
                         ? 'bg-gray-800 text-red-500'
                         : 'text-white hover:bg-gray-800'
                       }
                     `}
                     onClick={() => {
-                      handleServiceClick(service.path, service.name);
+                      handleServiceClick(service.path);
                     }}
                     onSelect={(e) => {
-                      e.preventDefault(); // Prevent default selection behavior
+                      e.preventDefault();
                     }}
                   >
                     <span>{service.name}</span>
@@ -206,44 +207,67 @@ export default function Header() {
             </button>
           </div>
 
-          <div className="px-6 pt-4 pb-8">
-            {/* Mobile Services Dropdown */}
-            <div className="mb-6">
-              <h3 className="text-red-500 font-bold text-lg mb-4 pl-2">Services</h3>
-              <div className="space-y-2">
-                {services.map((service, index) => (
-                  <button
-                    key={index}
-                    onClick={() => handleServiceClick(service.path, service.name)}
-                    className={`
-                      flex items-center justify-between w-full py-3 px-4 
-                      rounded-lg transition-colors text-left text-base
-                      ${selectedService === service.name
-                        ? 'bg-gray-800 text-red-500'
-                        : 'text-white hover:bg-gray-800'
-                      }
-                    `}
-                  >
-                    <span>{service.name}</span>
-                    <ChevronRight className="w-5 h-5 opacity-60" />
-                  </button>
-                ))}
+          <div className="px-6 pt-4 pb-8 overflow-y-auto max-h-[calc(100vh-80px)]">
+            {/* Mobile Services Parent Item (has children - shows chevron) */}
+            <div className="mb-4">
+              <button
+                onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
+                className="flex items-center justify-between w-full py-3 px-4 text-white hover:bg-gray-800 rounded-lg transition-colors text-left"
+              >
+                <span className="text-base font-medium">Services</span>
+                <ChevronRight
+                  className={`w-5 h-5 transition-transform duration-200 ${isMobileServicesOpen ? 'rotate-90' : ''
+                    }`}
+                />
+              </button>
+
+              {/* Mobile Services Child Items (Collapsible) */}
+              <div className={`
+                overflow-hidden transition-all duration-300 ease-in-out
+                ${isMobileServicesOpen ? 'max-h-[800px] opacity-100 mt-2' : 'max-h-0 opacity-0'}
+              `}>
+                <div className="space-y-1 pl-4">
+                  {services.map((service, index) => (
+                    <button
+                      key={index}
+                      onClick={() => handleServiceClick(service.path)}
+                      className={`
+                        flex items-center justify-between w-full py-3 px-4 
+                        rounded-lg transition-colors text-left text-sm
+                        ${isServiceActive(service.path)
+                          ? 'bg-gray-800 text-red-500'
+                          : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+                        }
+                      `}
+                    >
+                      <span>{service.name}</span>
+                      <ChevronRight className="w-4 h-4 opacity-60" />
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 
-            {/* Other Navigation Links */}
+            {/* Other Navigation Links (no children - no chevron) */}
             <div className="space-y-2">
               {navLinks.map((link, index) => (
                 <button
                   key={index}
                   onClick={() => {
                     setIsMobileMenuOpen(false);
+                    setIsMobileServicesOpen(false);
                     router.push(link.path);
                   }}
-                  className="flex items-center justify-between w-full py-3 px-4 text-white hover:bg-gray-800 rounded-lg transition-colors text-left"
+                  className={`
+                    w-full py-3 px-4 
+                    rounded-lg transition-colors text-left
+                    ${pathname === link.path
+                      ? 'bg-gray-800 text-red-500'
+                      : 'text-white hover:bg-gray-800'
+                    }
+                  `}
                 >
                   <span className="text-base">{link.name}</span>
-                  <ChevronRight className="w-5 h-5 opacity-60" />
                 </button>
               ))}
             </div>

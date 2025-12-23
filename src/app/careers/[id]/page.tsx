@@ -1,5 +1,7 @@
+"use client";
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, Briefcase, MapPin, Share2 } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 export default function JobDetailPage() {
   const responsibilities = [
@@ -27,6 +29,10 @@ export default function JobDetailPage() {
     { title: 'Conference attendance support' },
     { title: '30 days vacation' }
   ];
+
+  const handleApplyButton = () => {
+    toast.error("Application functionality is not implemented yet. Please check back later.");
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -153,7 +159,7 @@ export default function JobDetailPage() {
                 <p className="text-xs sm:text-sm mb-4 sm:mb-6 opacity-90">
                   Submit your application and join our team of security experts.
                 </p>
-                <Button className="w-full bg-white text-red-600 hover:bg-gray-100 font-semibold py-4 sm:py-6 text-sm sm:text-base">
+                <Button onClick={handleApplyButton} className="w-full bg-white text-red-600 hover:bg-gray-100 font-semibold py-4 sm:py-6 text-sm sm:text-base">
                   Apply Now
                 </Button>
               </div>
@@ -197,10 +203,10 @@ export default function JobDetailPage() {
               <div className="hidden sm:block bg-white border border-gray-200 rounded-lg p-4 sm:p-6">
                 <h3 className="text-lg font-bold mb-3 sm:mb-4">Share this Job</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-                  <Button variant="outline" className="w-full justify-center text-xs sm:text-sm">
+                  <Button onClick={() => toast.error("when backend is ready to be implemented")} variant="outline" className="w-full justify-center text-xs sm:text-sm">
                     LinkedIn
                   </Button>
-                  <Button variant="outline" className="w-full justify-center text-xs sm:text-sm">
+                  <Button onClick={() => toast.error("when backend is ready to be implemented")} variant="outline" className="w-full justify-center text-xs sm:text-sm">
                     Twitter
                   </Button>
                 </div>

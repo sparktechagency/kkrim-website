@@ -1,6 +1,7 @@
 "use client";
 
 import { Award, FileText, HandMetal, Zap } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 export default function WhyChooseSection() {
   const features = [
@@ -73,7 +74,7 @@ export default function WhyChooseSection() {
               <p className="text-sm sm:text-base lg:text-lg text-gray-800 mb-3 sm:mb-4 font-medium">
                 Ready to secure your digital assets?
               </p>
-              <button className="bg-gradient-to-r from-red-600 to-red-700 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold hover:from-red-700 hover:to-red-800 transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg text-sm sm:text-base w-full sm:w-auto">
+              <button onClick={() => toast.error("when backend is ready then working this button ")} className="bg-gradient-to-r cursor-pointer from-red-600 to-red-700 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold hover:from-red-700 hover:to-red-800 transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg text-sm sm:text-base w-full sm:w-auto">
                 Schedule a Consultation
               </button>
             </div>

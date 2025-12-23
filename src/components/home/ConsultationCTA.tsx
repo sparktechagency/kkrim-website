@@ -3,11 +3,13 @@
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Calendar } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 export default function ConsultationCTA() {
   const router = useRouter();
   const handleBookCall = () => {
-    console.log('Book a call clicked');
+    // console.log('Book a call clicked');
+    toast.error("when backend is ready then working this button ");
     // Add your booking logic here
   };
 

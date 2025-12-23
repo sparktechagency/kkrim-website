@@ -1,11 +1,14 @@
 "use client";
 import { ArrowRight, Globe, Server, Shield, Smartphone, Target, Users } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function SecurityServices() {
+  const router = useRouter();
   const services = [
     {
       icon: Server,
       title: 'Infrastructure',
+      route: "/services/infrastructure-testing",
       description: 'Network and system security testing to identify vulnerabilities in your infrastructure.',
       tagline: 'Secure your network perimeter',
       color: 'from-red-500 to-red-600'
@@ -13,6 +16,7 @@ export default function SecurityServices() {
     {
       icon: Globe,
       title: 'Web Application',
+      route: "/services/web-application-testing",
       description: 'Comprehensive web app security assessment covering OWASP Top 10 and beyond.',
       tagline: 'Protect your web applications',
       color: 'from-red-600 to-rose-600'
@@ -20,6 +24,7 @@ export default function SecurityServices() {
     {
       icon: Smartphone,
       title: 'Mobile App',
+      route: "/services/mobile-app-testing",
       description: 'iOS and Android security testing for mobile applications and APIs.',
       tagline: 'Secure mobile experiences',
       color: 'from-rose-600 to-pink-600'
@@ -27,22 +32,25 @@ export default function SecurityServices() {
     {
       icon: Shield,
       title: 'API Security',
+      route: "/services/api-security-testing",
       description: 'API endpoint testing and authentication/authorization vulnerability assessment.',
       tagline: 'Harden your API infrastructure',
       color: 'from-red-500 to-orange-600'
     },
     {
       icon: Target,
-      title: 'Red Teaming',
-      description: 'Advanced adversarial simulation testing your detection and response capabilities.',
-      tagline: 'Test real-world attack scenarios',
+      title: 'Cloud & devOps',
+      route: "/services/cloud-devops-testing",
+      description: 'Simulated advanced persistent threat (APT) attacks to test your overall security posture.',
+      tagline: 'Enhance your cloud security',
       color: 'from-orange-600 to-red-700'
     },
     {
       icon: Users,
-      title: 'Social Engineering',
-      description: 'Human factor testing including phishing campaigns and social engineering assessments.',
-      tagline: 'Strengthen human defenses',
+      title: 'Network Security',
+      route: "/services/network-audit",
+      description: 'Network security audit to identify vulnerabilities in your network infrastructure.',
+      tagline: 'Protect your network assets',
       color: 'from-red-700 to-rose-700'
     }
   ];
@@ -101,7 +109,7 @@ export default function SecurityServices() {
                   </div>
 
                   {/* CTA Link */}
-                  <button className="group/btn flex items-center gap-1 sm:gap-2 text-red-600 font-semibold text-sm sm:text-base hover:gap-2 sm:hover:gap-3 transition-all duration-300">
+                  <button onClick={() => router.push(service.route)} className="group/btn cursor-pointer flex items-center gap-1 sm:gap-2 text-red-600 font-semibold text-sm sm:text-base hover:gap-2 sm:hover:gap-3 transition-all duration-300">
                     Learn more
                     <ArrowRight className="w-3 h-3 sm:w-4 sm:h-4 group-hover/btn:translate-x-1 transition-transform duration-300" />
                   </button>
@@ -120,7 +128,7 @@ export default function SecurityServices() {
             <p className="text-white text-base sm:text-lg font-medium">
               Need a custom security assessment?
             </p>
-            <button className="bg-red-600 hover:bg-red-700 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-red-500/50 text-sm sm:text-base w-full sm:w-auto">
+            <button onClick={() => router.push("/contact")} className="bg-red-600 cursor-pointer hover:bg-red-700 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-red-500/50 text-sm sm:text-base w-full sm:w-auto">
               Get in Touch
             </button>
           </div>

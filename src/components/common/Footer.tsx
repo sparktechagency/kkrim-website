@@ -1,5 +1,6 @@
 import { Github, Linkedin, Mail, MapPin, Phone, Twitter } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
@@ -55,44 +56,44 @@ export default function Footer() {
             <h3 className="text-white font-semibold text-base lg:text-lg mb-4 lg:mb-6">Services</h3>
             <ul className="space-y-2 lg:space-y-3">
               <li>
-                <a
-                  href="#infrastructure"
+                <Link
+                  href="/services/infrastructure-testing"
                   className="text-gray-400 hover:text-white transition-colors text-sm block py-1"
                 >
                   Infrastructure Testing
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#web-app"
+                <Link
+                  href="/services/web-application-testing"
                   className="text-gray-400 hover:text-white transition-colors text-sm block py-1"
                 >
                   Web Application
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#mobile"
+                <Link
+                  href="/services/mobile-app-testing"
                   className="text-gray-400 hover:text-white transition-colors text-sm block py-1"
                 >
                   Mobile Security
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#api"
+                <Link
+                  href="/services/api-security-testing"
                   className="text-gray-400 hover:text-white transition-colors text-sm block py-1"
                 >
                   API Testing
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#cloud"
+                <Link
+                  href="/services/cloud-devops-testing"
                   className="text-gray-400 hover:text-white transition-colors text-sm block py-1"
                 >
                   Cloud Security
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -102,44 +103,44 @@ export default function Footer() {
             <h3 className="text-white font-semibold text-base lg:text-lg mb-4 lg:mb-6">Company</h3>
             <ul className="space-y-2 lg:space-y-3">
               <li>
-                <a
-                  href="#about"
+                <Link
+                  href="/about"
                   className="text-gray-400 hover:text-white transition-colors text-sm block py-1"
                 >
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#team"
+                <Link
+                  href="/about#team"
                   className="text-gray-400 hover:text-white transition-colors text-sm block py-1"
                 >
                   Our Team
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#careers"
+                <Link
+                  href="/careers"
                   className="text-gray-400 hover:text-white transition-colors text-sm block py-1"
                 >
                   Careers
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#blog"
+                <Link
+                  href="/case-studies"
                   className="text-gray-400 hover:text-white transition-colors text-sm block py-1"
                 >
                   Blog
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#contact"
+                <Link
+                  href="/contact"
                   className="text-gray-400 hover:text-white transition-colors text-sm block py-1"
                 >
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -149,45 +150,38 @@ export default function Footer() {
             <h3 className="text-white font-semibold text-base lg:text-lg mb-4 lg:mb-6">Resources</h3>
             <ul className="space-y-2 lg:space-y-3">
               <li>
-                <a
-                  href="#case-studies"
+                <Link
+                  href="/case-studies"
                   className="text-gray-400 hover:text-white transition-colors text-sm block py-1"
                 >
                   Case Studies
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#documentation"
+                <Link
+                  href="/case-studies/study/5"
                   className="text-gray-400 hover:text-white transition-colors text-sm block py-1"
                 >
                   Documentation
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#reports"
+                <Link
+                  href="/contact"
                   className="text-gray-400 hover:text-white transition-colors text-sm block py-1"
                 >
                   Sample Reports
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#security-tips"
+                <Link
+                  href="/services/network-audit"
                   className="text-gray-400 hover:text-white transition-colors text-sm block py-1"
                 >
                   Security Tips
-                </a>
+                </Link>
               </li>
-              <li>
-                <a
-                  href="#whitepapers"
-                  className="text-gray-400 hover:text-white transition-colors text-sm block py-1"
-                >
-                  Whitepapers
-                </a>
-              </li>
+
             </ul>
           </div>
         </div>
@@ -199,30 +193,18 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           {/* Legal Links - Stack on mobile, row on md+ */}
           <div className="flex flex-wrap justify-center gap-4 lg:gap-8">
-            <a
-              href="#privacy"
+            <Link
+              href="/privacy"
               className="text-gray-400 hover:text-white transition-colors text-xs lg:text-sm py-1"
             >
               Privacy Policy
-            </a>
-            <a
-              href="#terms"
+            </Link>
+            <Link
+              href="/terms"
               className="text-gray-400 hover:text-white transition-colors text-xs lg:text-sm py-1"
             >
               Terms of Service
-            </a>
-            <a
-              href="#imprint"
-              className="text-gray-400 hover:text-white transition-colors text-xs lg:text-sm py-1"
-            >
-              Imprint
-            </a>
-            <a
-              href="#cookies"
-              className="text-gray-400 hover:text-white transition-colors text-xs lg:text-sm py-1"
-            >
-              Cookie Policy
-            </a>
+            </Link>
           </div>
 
           {/* Social Links */}

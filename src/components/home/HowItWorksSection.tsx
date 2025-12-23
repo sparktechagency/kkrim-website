@@ -1,8 +1,10 @@
 "use client";
 
 import { ClipboardList, FileText, RotateCcw, Search } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export default function HowItWorksSection() {
+  const router = useRouter();
   const steps = [
     {
       number: "01",
@@ -131,7 +133,7 @@ export default function HowItWorksSection() {
               <p className="text-sm sm:text-base lg:text-lg text-gray-300 mb-3 sm:mb-4 font-medium">
                 Ready to start your security assessment?
               </p>
-              <button className="bg-gradient-to-r from-red-600 to-red-700 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold hover:from-red-700 hover:to-red-800 transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg text-sm sm:text-base w-full sm:w-auto">
+              <button onClick={() => router.push("/request-pentest")} className="cursor-pointer bg-gradient-to-r from-red-600 to-red-700 text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold hover:from-red-700 hover:to-red-800 transition-all duration-300 hover:scale-105 shadow-md hover:shadow-lg text-sm sm:text-base w-full sm:w-auto">
                 Begin Your Assessment
               </button>
             </div>

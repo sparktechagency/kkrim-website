@@ -1,8 +1,14 @@
+"use client";
+
 import { Award, Building2, CheckCircle, Eye, Headphones, Lock, Shield, Target, TrendingUp, Users } from 'lucide-react';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
 import { Button } from '../../components/ui/button';
 
 export default function AboutSection() {
+
+  const pathname = usePathname();
 
   const teamMembers = [
     {
@@ -84,6 +90,17 @@ export default function AboutSection() {
     { name: 'AWS', subtitle: 'AWS Partner' },
     { name: 'MS', subtitle: 'Microsoft Partner' }
   ];
+
+
+
+
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    if (hash) {
+      const el = document.getElementById(hash);
+      el?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [pathname]);
 
   return (
     <div className="bg-black">
@@ -247,7 +264,7 @@ export default function AboutSection() {
       </div>
 
       {/* Team Section */}
-      <div className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 bg-white">
+      <div id='#team' className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 bg-white">
         <div className="container mx-auto max-w-7xl">
           {/* Header */}
           <div className="mb-8 sm:mb-12 text-center">

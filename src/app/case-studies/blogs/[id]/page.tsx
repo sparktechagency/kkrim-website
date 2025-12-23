@@ -5,17 +5,23 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft, Bookmark, Calendar, ChevronDown, Clock, Share2, User } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
 
 export default function BlogArticleDetail() {
   const [showMobileTOC, setShowMobileTOC] = useState(false);
+  const router = useRouter();
+
 
   const handleBack = () => {
     window.history.back();
   };
 
+
   const handleRequestConsultation = () => {
-    window.location.href = '/contact';
+    // window.location.href = '/contact';
+    toast.error('Request consultation functionality is not implemented yet. when backend is ready.');
   };
 
   // Table of Contents items
@@ -42,9 +48,13 @@ export default function BlogArticleDetail() {
       }
     } else {
       navigator.clipboard.writeText(window.location.href);
-      alert('Link copied to clipboard!');
+      toast.success('Link copied to clipboard!');
     }
   };
+
+  const handleSave = () => {
+    toast.error('Save functionality is not implemented yet.');
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -54,7 +64,7 @@ export default function BlogArticleDetail() {
           <div className="flex items-center justify-between mb-4 sm:mb-6">
             <button
               onClick={handleBack}
-              className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm sm:text-base"
+              className="flex items-center cursor-pointer gap-2 text-gray-400 hover:text-white transition-colors text-sm sm:text-base"
             >
               <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               <span>Back to Blog</span>
@@ -171,6 +181,7 @@ export default function BlogArticleDetail() {
                   <h3 className="text-sm font-bold text-gray-900 mb-3">Share this article</h3>
                   <div className="flex flex-wrap gap-2">
                     <Button
+
                       variant="outline"
                       size="sm"
                       className="flex-1 min-w-[120px]"
@@ -180,6 +191,7 @@ export default function BlogArticleDetail() {
                       Share
                     </Button>
                     <Button
+                      onClick={handleSave}
                       variant="outline"
                       size="sm"
                       className="flex-1 min-w-[120px]"
@@ -358,12 +370,14 @@ export default function BlogArticleDetail() {
                     title: "API Security Best Practices for 2024",
                     desc: "Essential strategies to secure your APIs against modern threats and vulnerabilities.",
                     category: "GUIDES",
+                    route: "/case-studies/blogs/2",
                     readTime: "10 min read"
                   },
                   {
                     title: "Zero-Day Vulnerabilities: Detection and Response",
                     desc: "How to detect, respond to, and mitigate zero-day vulnerabilities in your organization.",
                     category: "VULNERABILITIES",
+                    route: "/case-studies/blogs/2",
                     readTime: "9 min read"
                   }
                 ].map((article, index) => (
@@ -381,7 +395,7 @@ export default function BlogArticleDetail() {
                       <p className="text-gray-600 text-sm sm:text-base line-clamp-2">
                         {article.desc}
                       </p>
-                      <Button variant="link" className="text-red-600 hover:text-red-700 p-0 mt-2 text-sm sm:text-base">
+                      <Button onClick={() => router.push(article.route)} variant="link" className="text-red-600 hover:text-red-700 p-0 mt-2 text-sm sm:text-base">
                         Read Article →
                       </Button>
                     </CardContent>

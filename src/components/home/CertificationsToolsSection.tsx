@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Download, FileText, Shield } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 export default function CertificationsToolsSection() {
   const certifications = [
@@ -33,7 +34,8 @@ export default function CertificationsToolsSection() {
   ];
 
   const handleDownloadReport = () => {
-    console.log('Download sample report');
+    toast.error("when backend is ready then working this button ");
+
   };
 
   return (

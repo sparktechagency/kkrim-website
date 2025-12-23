@@ -68,6 +68,7 @@ export default function Hero() {
               </Button>
               <Button
                 size="lg"
+                onClick={()=>router.push("/contact")}
                 variant="outline"
                 className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white px-6 sm:px-8 py-4 sm:py-6 text-base sm:text-lg font-semibold rounded-lg transition-all duration-300 hover:scale-105 w-full sm:w-auto justify-center"
               >

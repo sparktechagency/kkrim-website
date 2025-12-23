@@ -270,7 +270,7 @@ export default function CaseStudiesPage() {
                   size="sm"
                   className={`whitespace-nowrap text-xs sm:text-sm ${selectedCaseCategory === category
                     ? 'bg-red-600 hover:bg-red-700'
-                    : 'bg-transparent border-gray-700 hover:bg-gray-800'
+                    : 'bg-transparent border-gray-100 hover:bg-gray-50'
                     }`}
                   onClick={() => setSelectedCaseCategory(category)}
                 >
@@ -379,7 +379,7 @@ export default function CaseStudiesPage() {
                   size="sm"
                   className={`whitespace-nowrap text-xs text-white sm:text-sm ${selectedBlogCategory === category
                     ? 'bg-red-600 hover:bg-red-700'
-                    : 'bg-transparent border-gray-700 hover:bg-gray-800'
+                    : 'bg-transparent border-gray-100 hover:bg-gray-50'
                     }`}
                   onClick={() => setSelectedBlogCategory(category)}
                 >

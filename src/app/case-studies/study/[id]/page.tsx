@@ -325,15 +325,15 @@ export default function CaseStudyDetail() {
           <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">Related Services</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {[
-              { title: "API Security Testing", desc: "Comprehensive API vulnerability assessment" },
-              { title: "Cloud Infrastructure Audit", desc: "AWS, Azure, GCP security reviews" },
-              { title: "Mobile App Security", desc: "iOS & Android application testing" }
+              { title: "API Security Testing", desc: "Comprehensive API vulnerability assessment", route: "/services/api-security-testing" },
+              { title: "Cloud Infrastructure Audit", desc: "AWS, Azure, GCP security reviews", route: "/services/cloud-devops-testing" },
+              { title: "Mobile App Security", desc: "iOS & Android application testing", route: "/services/mobile-app-testing" },
             ].map((service, index) => (
               <Card key={index} className="border-gray-200 hover:border-red-300 transition-colors">
                 <CardContent className="p-4 sm:p-6">
                   <h4 className="font-bold text-gray-900 mb-2 text-lg">{service.title}</h4>
                   <p className="text-gray-600 text-sm sm:text-base mb-4">{service.desc}</p>
-                  <Button variant="link" className="text-red-600 hover:text-red-700 p-0 text-sm sm:text-base">
+                  <Button onClick={() => router.push(service.route)} variant="link" className="text-red-600 hover:text-red-700 p-0 text-sm sm:text-base">
                     Learn More →
                   </Button>
                 </CardContent>
