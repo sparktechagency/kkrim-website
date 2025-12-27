@@ -1,0 +1,24 @@
+{
+  "header": {
+    "services": "Dienstleistungen",
+    "chooseServices": "Wählen Sie Ihre Dienstleistungen",
+    "about": "Über uns",
+    "caseStudiesBlogs": "Fallstudien & Blogs",
+    "careers": "Karriere",
+    "contact": "Kontakt",
+    "requestPentest": "Pentest anfordern",
+    "language": "Sprache",
+    "selectLanguage": "Wählen Sie Ihre bevorzugte Sprache",
+    "english": "Englisch",
+    "german": "Deutsch",
+    "servicesList": {
+      "infrastructureTesting": "Infrastruktur Penetrationstest",
+      "webApplicationTesting": "Webanwendungs Penetrationstest",
+      "mobileAppTesting": "Mobile App Penetrationstest",
+      "apiSecurityTesting": "API-Sicherheitstest",
+      "cloudDevopsTesting": "Cloud & DevOps Sicherheitstest",
+      "networkAudit": "Netzwerksicherheitsaudit",
+      "smePackages": "KMU / Sicherheitspakete für kleine Unternehmen"
+    }
+  }
+}

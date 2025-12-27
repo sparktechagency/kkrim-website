@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -5,19 +7,61 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { ChevronDown, ChevronRight, Globe, Menu, X } from 'lucide-react';
+import { ChevronDown, ChevronRight, Menu, X } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 
 export default function Header() {
-  const [language, setLanguage] = useState('EN');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileServicesOpen, setIsMobileServicesOpen] = useState(false);
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
+  const [currentLocale, setCurrentLocale] = useState<string>("en");
+  const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const pathname = usePathname();
+  const t = useTranslations('header');
+
+  // Get locale from cookie
+  useEffect(() => {
+    const getLocale = () => {
+      if (typeof document !== "undefined") {
+        const cookies = document.cookie.split(";");
+        const localeCookie = cookies.find((cookie) =>
+          cookie.trim().startsWith("SUDOSECURE_LOCALE=")
+        );
+        if (localeCookie) {
+          const locale = localeCookie.split("=")[1]?.trim();
+          if (locale === "de" || locale === "en") {
+            return locale;
+          }
+        }
+      }
+      return "en";
+    };
+    const locale = getLocale();
+    setCurrentLocale(locale);
+  }, []);
+
+  // Language toggle handler
+  const handleLanguageToggle = () => {
+    const newLocale = currentLocale === "de" ? "en" : "de";
+
+    // 1. Update state
+    setCurrentLocale(newLocale);
+
+    // 2. Set cookie
+    if (typeof document !== "undefined") {
+      document.cookie = `SUDOSECURE_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
+    }
+
+    // 3. Refresh the page to apply new locale
+    startTransition(() => {
+      window.location.reload();
+    });
+  };
 
   const handleServiceClick = (path: string) => {
     setIsServicesDropdownOpen(false);
@@ -26,27 +70,42 @@ export default function Header() {
     router.push(path);
   };
 
-  const handleLanguageChange = (newLanguage: string) => {
-    setLanguage(newLanguage);
-  };
-
-  console.log(handleLanguageChange);
-
   const services = [
-    { name: 'Infrastructure Penetration Testing', path: '/services/infrastructure-testing' },
-    { name: 'Web Application Penetration Testing', path: '/services/web-application-testing' },
-    { name: 'Mobile App Penetration Testing', path: '/services/mobile-app-testing' },
-    { name: 'API Security Testing', path: '/services/api-security-testing' },
-    { name: 'Cloud & DevOps Security Testing', path: '/services/cloud-devops-testing' },
-    { name: 'Network Security Audit', path: '/services/network-audit' },
-    { name: 'SME / Small Business Security Packages', path: '/services/sme-packages' },
+    {
+      name: t('servicesList.infrastructureTesting'),
+      path: '/services/infrastructure-testing'
+    },
+    {
+      name: t('servicesList.webApplicationTesting'),
+      path: '/services/web-application-testing'
+    },
+    {
+      name: t('servicesList.mobileAppTesting'),
+      path: '/services/mobile-app-testing'
+    },
+    {
+      name: t('servicesList.apiSecurityTesting'),
+      path: '/services/api-security-testing'
+    },
+    {
+      name: t('servicesList.cloudDevopsTesting'),
+      path: '/services/cloud-devops-testing'
+    },
+    {
+      name: t('servicesList.networkAudit'),
+      path: '/services/network-audit'
+    },
+    {
+      name: t('servicesList.smePackages'),
+      path: '/services/sme-packages'
+    },
   ];
 
   const navLinks = [
-    { name: 'About', path: '/about' },
-    { name: 'Case Studies & Blogs', path: '/case-studies' },
-    { name: 'Careers', path: '/careers' },
-    { name: 'Contact', path: '/contact' },
+    { name: t('about'), path: '/about' },
+    { name: t('caseStudiesBlogs'), path: '/case-studies' },
+    { name: t('careers'), path: '/careers' },
+    { name: t('contact'), path: '/contact' },
   ];
 
   const isServiceActive = (path: string) => pathname === path;
@@ -90,7 +149,7 @@ export default function Header() {
           <div className="hidden lg:flex items-center gap-6 xl:gap-8">
             <DropdownMenu open={isServicesDropdownOpen} onOpenChange={setIsServicesDropdownOpen}>
               <DropdownMenuTrigger className="flex items-center gap-1 focus:outline-none border-none cursor-pointer select-none text-white hover:text-gray-300 transition-colors text-sm xl:text-base">
-                Services
+                {t('services')}
                 <ChevronDown className="w-4 h-4" />
               </DropdownMenuTrigger>
               <DropdownMenuContent
@@ -100,7 +159,9 @@ export default function Header() {
               >
                 {/* Header */}
                 <div className="pb-3 mb-3 border-b border-gray-700">
-                  <h3 className="text-red-500 font-bold text-base xl:text-lg">Choose Your Services</h3>
+                  <h3 className="text-red-500 font-bold text-base xl:text-lg">
+                    {t('chooseServices')}
+                  </h3>
                 </div>
 
                 {/* Menu Items */}
@@ -129,64 +190,53 @@ export default function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Link href="/about" className="text-white hover:text-gray-300 transition-colors text-sm xl:text-base">
-              About
-            </Link>
-
-            <Link href="/case-studies" className="text-white hover:text-gray-300 transition-colors text-sm xl:text-base">
-              Case Studies & Blogs
-            </Link>
-
-            <Link href="/careers" className="text-white hover:text-gray-300 transition-colors text-sm xl:text-base">
-              Careers
-            </Link>
-
-            <Link href="/contact" className="text-white hover:text-gray-300 transition-colors text-sm xl:text-base">
-              Contact
-            </Link>
+            {navLinks.map((link, index) => (
+              <Link
+                key={index}
+                href={link.path}
+                className="text-white hover:text-gray-300 transition-colors text-sm xl:text-base"
+              >
+                {link.name}
+              </Link>
+            ))}
           </div>
 
           {/* Right Section */}
           <div className="flex items-center gap-2 sm:gap-4">
             {/* Language Selector */}
-            <DropdownMenu>
-              <DropdownMenuTrigger className="flex items-center focus:outline-none gap-1 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 border border-gray-600 rounded-lg text-white hover:bg-gray-800 transition-colors text-sm">
-                <Globe className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                <span className="text-gray-400 hidden sm:inline">DE</span>
-                <span className="text-gray-400 hidden sm:inline">/</span>
-                <span className="text-red-500 font-medium">{language}</span>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                className="bg-[#1a1f2e] border-gray-700"
-                onCloseAutoFocus={(e) => e.preventDefault()}
-              >
-                <DropdownMenuItem
-                  onClick={() => {
-                    setLanguage('EN');
-                  }}
-                  className={`text-white hover:bg-gray-800 ${language === 'EN' ? 'bg-gray-800' : ''}`}
-                  onSelect={(e) => e.preventDefault()}
-                >
-                  English
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => {
-                    setLanguage('DE');
-                  }}
-                  className={`text-white hover:bg-gray-800 ${language === 'DE' ? 'bg-gray-800' : ''}`}
-                  onSelect={(e) => e.preventDefault()}
-                >
-                  Deutsch
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <div className="flex items-center gap-2">
+              <label className="language-switch relative inline-block w-16 h-8 cursor-pointer" htmlFor="language">
+                <input
+                  id="language"
+                  type="checkbox"
+                  checked={currentLocale === "de"}
+                  onChange={handleLanguageToggle}
+                  disabled={isPending}
+                  className="hidden"
+                />
+                <span className="switch-track absolute top-0 left-0 right-0 bottom-0 bg-gray-800 rounded-full transition-colors duration-300">
+                  <span className="language-option absolute left-2 top-1/2 transform -translate-y-1/2 text-xs font-medium text-white">
+                    EN
+                  </span>
+                  <span className="language-option absolute right-2 top-1/2 transform -translate-y-1/2 text-xs font-medium text-white">
+                    DE
+                  </span>
+                  <span className="switch-thumb absolute top-1 left-1 w-6 h-6 bg-red-600 rounded-full transition-transform duration-300 transform"
+                    style={{ transform: currentLocale === "de" ? 'translateX(32px)' : 'translateX(0)' }}>
+                    <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-white">
+                      {currentLocale === "de" ? "DE" : "EN"}
+                    </span>
+                  </span>
+                </span>
+              </label>
+            </div>
 
             {/* Request Pentest Button */}
             <Button
               onClick={() => router.push("/request-pentest")}
               className="bg-red-600 hover:bg-red-700 text-white px-3 sm:px-6 py-1.5 sm:py-2.5 rounded-lg font-medium transition-colors text-sm sm:text-base whitespace-nowrap"
             >
-              Request Pentest
+              {t('requestPentest')}
             </Button>
           </div>
         </div>
@@ -208,20 +258,20 @@ export default function Header() {
           </div>
 
           <div className="px-6 pt-4 pb-8 overflow-y-auto max-h-[calc(100vh-80px)]">
-            {/* Mobile Services Parent Item (has children - shows chevron) */}
+            {/* Mobile Services */}
             <div className="mb-4">
               <button
                 onClick={() => setIsMobileServicesOpen(!isMobileServicesOpen)}
                 className="flex items-center justify-between w-full py-3 px-4 text-white hover:bg-gray-800 rounded-lg transition-colors text-left"
               >
-                <span className="text-base font-medium">Services</span>
+                <span className="text-base font-medium">{t('services')}</span>
                 <ChevronRight
                   className={`w-5 h-5 transition-transform duration-200 ${isMobileServicesOpen ? 'rotate-90' : ''
                     }`}
                 />
               </button>
 
-              {/* Mobile Services Child Items (Collapsible) */}
+              {/* Mobile Services Child Items */}
               <div className={`
                 overflow-hidden transition-all duration-300 ease-in-out
                 ${isMobileServicesOpen ? 'max-h-[800px] opacity-100 mt-2' : 'max-h-0 opacity-0'}
@@ -248,7 +298,7 @@ export default function Header() {
               </div>
             </div>
 
-            {/* Other Navigation Links (no children - no chevron) */}
+            {/* Other Navigation Links */}
             <div className="space-y-2">
               {navLinks.map((link, index) => (
                 <button
@@ -274,26 +324,33 @@ export default function Header() {
 
             {/* Mobile Language Selector */}
             <div className="mt-8 pt-6 border-t border-gray-700">
-              <h3 className="text-white font-medium mb-4 pl-2">Language</h3>
-              <div className="flex gap-4">
-                <button
-                  onClick={() => setLanguage('EN')}
-                  className={`px-6 py-3 rounded-lg transition-colors ${language === 'EN'
-                    ? 'bg-red-600 text-white'
-                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                    }`}
-                >
-                  English
-                </button>
-                <button
-                  onClick={() => setLanguage('DE')}
-                  className={`px-6 py-3 rounded-lg transition-colors ${language === 'DE'
-                    ? 'bg-red-600 text-white'
-                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                    }`}
-                >
-                  Deutsch
-                </button>
+              <h3 className="text-white font-medium mb-4 pl-2">{t('language')}</h3>
+              <div className="flex items-center justify-between">
+                <span className="text-gray-300 text-sm">{t('selectLanguage')}</span>
+                <label className="language-switch relative inline-block w-16 h-8 cursor-pointer" htmlFor="language-mobile">
+                  <input
+                    id="language-mobile"
+                    type="checkbox"
+                    checked={currentLocale === "de"}
+                    onChange={handleLanguageToggle}
+                    disabled={isPending}
+                    className="hidden"
+                  />
+                  <span className="switch-track absolute top-0 left-0 right-0 bottom-0 bg-gray-800 rounded-full transition-colors duration-300">
+                    <span className="language-option absolute left-2 top-1/2 transform -translate-y-1/2 text-xs font-medium text-white">
+                      EN
+                    </span>
+                    <span className="language-option absolute right-2 top-1/2 transform -translate-y-1/2 text-xs font-medium text-white">
+                      DE
+                    </span>
+                    <span className="switch-thumb absolute top-1 left-1 w-6 h-6 bg-red-600 rounded-full transition-transform duration-300 transform"
+                      style={{ transform: currentLocale === "de" ? 'translateX(32px)' : 'translateX(0)' }}>
+                      <span className="absolute inset-0 flex items-center justify-center text-xs font-medium text-white">
+                        {currentLocale === "de" ? "DE" : "EN"}
+                      </span>
+                    </span>
+                  </span>
+                </label>
               </div>
             </div>
           </div>
