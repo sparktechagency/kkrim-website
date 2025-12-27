@@ -45,7 +45,7 @@ export default function Header() {
     setCurrentLocale(locale);
   }, []);
 
-  // Language toggle handler
+  // Language toggle handler (WITHOUT page reload)
   const handleLanguageToggle = () => {
     const newLocale = currentLocale === "de" ? "en" : "de";
 
@@ -57,9 +57,9 @@ export default function Header() {
       document.cookie = `SUDOSECURE_LOCALE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
     }
 
-    // 3. Refresh the page to apply new locale
+    // 3. Trigger re-render by forcing router refresh (without full page reload)
     startTransition(() => {
-      window.location.reload();
+      router.refresh();
     });
   };
 
@@ -205,7 +205,7 @@ export default function Header() {
           <div className="flex items-center gap-2 sm:gap-4">
             {/* Language Selector */}
             <div className="flex items-center gap-2">
-              <label className="language-switch relative inline-block w-16 h-8 cursor-pointer" htmlFor="language">
+              <label className="language-switch relative inline-block w-20 h-8 cursor-pointer" htmlFor="language">
                 <input
                   id="language"
                   type="checkbox"
